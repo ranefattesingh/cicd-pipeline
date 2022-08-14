@@ -5,19 +5,17 @@ import (
 	"net/http"
 )
 
-var (
-	errInternalServer = errors.New("server could not handle the request")
-)
+var errInternalServer = errors.New("server could not handle the request")
 
-func EncodeError(w http.ResponseWriter, data interface{}, statusCode int) {
+func EncodeError(writer http.ResponseWriter, data interface{}, statusCode int) {
 	res := Response{
 		Success: false,
 		Data:    data,
 	}
 
-	EncodeJSON(w, res, statusCode)
+	EncodeJSON(writer, res, statusCode)
 }
 
-func EncodeInternalServerError(w http.ResponseWriter) {
-	EncodeError(w, errInternalServer, http.StatusInternalServerError)
+func EncodeInternalServerError(writer http.ResponseWriter) {
+	EncodeError(writer, errInternalServer, http.StatusInternalServerError)
 }

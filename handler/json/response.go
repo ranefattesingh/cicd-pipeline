@@ -10,25 +10,27 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
-func EncodeJSON(w http.ResponseWriter, data interface{}, statusCode int) {
+func EncodeJSON(writer http.ResponseWriter, data interface{}, statusCode int) {
 	byteSlice, err := json.Marshal(data)
 	if err != nil {
-		EncodeInternalServerError(w)
+		EncodeInternalServerError(writer)
+
 		return
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	_, err = w.Write(byteSlice)
-	if err != nil {
-		EncodeInternalServerError(w)
+	writer.WriteHeader(statusCode)
+	writer.Header().Add("Content-Type", "application/json")
+
+	if _, err := writer.Write(byteSlice); err != nil {
+		EncodeInternalServerError(writer)
 	}
 }
 
-func EncodeResponse(w http.ResponseWriter, data interface{}, statusCode int) {
+func EncodeResponse(writer http.ResponseWriter, data interface{}, statusCode int) {
 	response := Response{
 		Success: true,
 		Data:    data,
 	}
 
-	EncodeJSON(w, response, statusCode)
+	EncodeJSON(writer, response, statusCode)
 }

@@ -10,9 +10,9 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	ph := handler.NewPingHandler()
-	r.HandleFunc("/ping", ph.Ping)
+	r.HandleFunc("/ping", handler.Ping)
 	log.Println("Server starting on port 8080")
+
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		log.Fatal("Server error")
 	}
