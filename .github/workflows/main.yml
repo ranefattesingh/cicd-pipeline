@@ -21,9 +21,6 @@ jobs:
       
       - name: run linter
         run:  make lint
-        
-      - name: path exporter
-        run:  export PATH=$PATH:/home/runner/go/bin
       
       - name: run test
         run:  make test
