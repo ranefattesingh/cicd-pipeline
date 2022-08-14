@@ -15,9 +15,6 @@ test.coverage:
 	@go tool cover -func ${COVER_FILE} | tail -1 | xargs echo test coverage:
 
 lint:
-	pwd
-	ls /home/runner/go/bin
-	export PATH=$PATH:/home/runner/go/bin
 	golangci-lint run -c .golangci.yml
 
 build-deps:
