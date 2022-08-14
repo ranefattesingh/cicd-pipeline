@@ -1,0 +1,44 @@
+name: Basic Build Test Workflow
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "main"
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout source code
+          uses: actions/checkout@v2
+
+        - name: setup environment
+          uses: actions/setup-go@3.2.1
+
+        - name: install dependencies
+          run:  make install
+        
+        - name: run linter
+          run:  make lint
+        
+        - name: run test
+          run:  make test
+
+        - name: run coverage test
+          run: make test.coverage
+    
+    build:
+      runs-on:  ubuntu-latest
+      steps:
+        - name: checkout source code
+          uses: actions/checkout@v2
+
+        - name: setup environment
+          uses: actions/setup-go@3.2.1
+
+        - name: install dependencies
+          run:  make install
+
+        - name: build project
+          run:  make build
