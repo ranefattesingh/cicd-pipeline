@@ -3,7 +3,7 @@ COVER_HTML=coverage.html
 
 install:
 	make build-deps
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@1.4.7.2
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@1.47.2
 
 test:
 	go test ./...
