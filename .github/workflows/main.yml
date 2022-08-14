@@ -19,6 +19,9 @@ jobs:
       - name: install dependencies
         run:  make install
       
+      - name: set env
+        run:  echo "$HOME/go/bin" >> $GITHUB_PATH
+      
       - name: run linter
         run:  make lint
       
