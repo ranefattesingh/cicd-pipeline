@@ -1,6 +1,10 @@
 COVER_FILE=coverage.out
 COVER_HTML=coverage.html
 
+install:
+	make build-deps
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
 test:
 	go test ./...
 
