@@ -1,0 +1,149 @@
+run:
+  timeout: 5m
+  skip-dirs:
+    - helm-values
+output:
+  format: json:golangci-lint-report.txt,colored-line-number:stdout
+linters:
+  enable-all: true
+  disable:
+    # Rules to review
+    # - varnamelen
+    # - wrapcheck
+    # - tagliatelle
+    # - paralleltest
+    # - nlreturn
+    # - gochecknoglobals
+    # - exhaustivestruct
+    # - forcetypeassert
+    # - exhaustive
+    # - wsl
+    # - scopelint
+    # - promlinter
+    # - interfacer
+    # - godox
+    # - godot
+    # - errcheck
+    # - maintidx
+    # - errchkjson
+    - thelper
+
+    # # Following linters should be enabled after fixing the code
+    # - testpackage
+    # - cyclop
+    # - ireturn
+    # - goerr113
+    # - nilerr
+    # - prealloc
+    # - nestif
+    # - lll
+    # - maligned
+    - golint
+    # - gocognit
+    # - funlen
+    # - gocyclo
+    # - dupl
+    # - gofumpt
+    # - nolintlint
+    # - exhaustruct
+linters-settings:
+  gofumpt:
+    lang-version: "1.18"
+    extra-rules: true
+  revive:
+    severity: error
+    rules:
+      - name: atomic
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: defer
+      - name: dot-imports
+      - name: empty-block
+      - name: error-naming
+      - name: error-return
+#      - name: error-strings
+      - name: early-return
+      - name: errorf
+#      - name: exported
+      - name: if-return
+      - name: increment-decrement
+      - name: indent-error-flow
+#      - name: flag-parameter
+#      - name: modifies-parameter
+      - name: modifies-value-receiver
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: redefines-builtin-id
+      - name: superfluous-else
+      - name: time-naming
+#      - name: unexported-naming
+#      - name: unexported-return
+      - name: var-declaration
+      - name: var-naming
+      - name: var-declaration
+      - name: unused-receiver
+      - name: unused-parameter
+      - name: useless-break
+      - name: unnecessary-stmt
+      - name: unreachable-code
+  goconst:
+    ignore-tests: true
+    numbers: true
+  gomnd:
+    ignored-numbers: # Why we have a big range of file permissions
+      - '0o600'
+      - '0o644'
+      - '0o655'
+      - '0o666'
+      - '0o770'
+      - '0o755'
+      - '0o765'
+      - '0o777'
+    ignored-functions:
+      - 'survey.MinLength'
+      - 'survey.MaxLength'
+      - 'args.Error'
+  gosimple:
+    go: "1.18"
+    checks:
+      - "all"
+      - "-S1002"
+  staticcheck:
+    go: "1.18"
+    checks:
+      - "all"
+      - "-SA1019"
+  goimports:
+    local-prefixes: source.golabs.io/asgard/cmp/journeys
+  gci:
+    sections:
+      - standard # Captures all standard packages if they do not match another section.
+      - default # Contains all imports that could not be matched to another section type.
+      - prefix(source.golabs.io/asgard/cmp/journeys) # Groups all imports with the specified Prefix.
+  gocritic:
+    disabled-checks:
+      - ifElseChain
+      - singleCaseSwitch
+    enabled-tags:
+      - diagnostic
+#      - style
+#      - opinionated
+#      - performance
+  unparam:
+    # Inspect exported functions.
+    # XXX: if you enable this setting, unparam will report a lot of false-positives in text editors:
+    check-exported: true
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocritic
+    - path: tests
+      linters:
+        - gocritic
+        - gomnd
+        - unparam
+severity:
+  default-severity: error
