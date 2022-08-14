@@ -16,7 +16,7 @@ test.coverage:
 
 lint:
 	pwd
-	ls /home/runner/
+	ls /home/runner/go/bin
 	export PATH=$PATH:/home/runner/go/bin
 	golangci-lint run -c .golangci.yml
 
