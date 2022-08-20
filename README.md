@@ -1,1 +1,1 @@
-#CI/CD pipeline setup example
+# CI/CD pipeline setup example
